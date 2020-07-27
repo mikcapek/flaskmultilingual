@@ -4,7 +4,6 @@ from flask_babelex import Babel, gettext
 from app.blueprints.multilingual import multilingual
 
 
-
 app = Flask(__name__)
 app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 babel = Babel(app)
@@ -22,8 +21,6 @@ def index():
 	whatever = gettext('Hi from Prague')
 
 	return render_template('index.html', whatever= whatever)
-
-
 
 if __name__ == '__main__':
 	app.run(debug=True)
