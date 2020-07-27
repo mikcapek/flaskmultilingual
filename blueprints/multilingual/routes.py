@@ -17,3 +17,7 @@ def pull_lang_code(endpoint, values):
 @multilingual.route('/index')
 def index():
 	return render_template('multilingual/index.html', title='Home')
+
+@multilingual.route('/random')
+def random():
+	return render_template('multilingual/randomstuff.html', title='Random')
