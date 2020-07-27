@@ -1,27 +1,27 @@
-from flask import Flask, request, render_template, redirect, Blueprint
-from flask_babelex import Babel, gettext
+from flask import Flask, request, render_template, redirect, Blueprint, g, url_for
+from flask_babelex import Babel, gettext, refresh
+from config import Config
 
 from app.blueprints.multilingual import multilingual
 
 
 
 app = Flask(__name__)
-app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config.from_object(Config)
 babel = Babel(app)
 app.register_blueprint(multilingual)
 
+
 @babel.localeselector
 def get_locale():
-	if request.args.get('lang'):
-		session['lang'] = request.args.get('lang')
-		return session.get('lang', 'en')
+    if not g.get('lang_code', None):
+        g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
+    return g.lang_code
 
 @app.route('/')
-def index():
-
-	whatever = gettext('Hi from Prague')
-
-	return render_template('index.html', whatever= whatever)
+def home():
+    g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
+    return redirect(url_for('multilingual.index'))	
 
 
 

@@ -8,3 +8,7 @@
 <h4>Hi: {{ _('Hi from Prague') }}</h4>
 
 <h4>{{ whatever }}</h4>
+
+<a href="{{ url_for(request.endpoint, lang_code='de') }}">de</a>&nbsp;
+
+<a href="{{ url_for('multilingual.index') }}">{{_('Home')}}</a>&nbsp;
